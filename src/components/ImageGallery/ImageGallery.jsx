@@ -4,9 +4,8 @@ import shortid from "shortid";
 
 
 function ImageGallery({ img }) {
-    console.log(img);
     return (
-        <ul>
+        <ul className="ImageGallery">
             {img.map(item => {
                 return (
                     <ImageGalleryItem data={item} key={shortid()} />

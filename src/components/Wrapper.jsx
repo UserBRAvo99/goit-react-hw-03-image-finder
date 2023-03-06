@@ -12,6 +12,7 @@ class Wrapper extends Component {
     data: [],
     search: '',
     page: 1,
+    perPage: 20,
     modalGallery: false,
     loader: false,
   }
@@ -23,7 +24,7 @@ class Wrapper extends Component {
   
   getData = async () => {
     try {
-      const { data: { hits } } = await getImgs(this.state.search, this.state.page)
+      const { data: { hits } } = await getImgs(this.state.search, this.state.page, this.state.perPage)
       this.setState({ data: hits })
     } catch (e) {
       console.log(e);
@@ -35,12 +36,6 @@ class Wrapper extends Component {
     event.preventDefault()
 
     this.getData()
-    // console.log(this.state.data);
-    
-    // getImgs().then(res => {
-    //   this.setState({ data: res.data.hits });
-    //   console.log(res);
-    // }).catch({})
   }
 
   componentDidMount() {

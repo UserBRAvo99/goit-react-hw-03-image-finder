@@ -1,9 +1,10 @@
 
 
 function ImageGalleryItem({data}) {
-    console.log(data);
     return (
-        <li></li>
+        <li className="ImageGalleryItem" id={data.id}>
+            <img src={data.webformatURL} alt={data.tags} className="ImageGalleryItem-image" />
+        </li>
     )
 }
 
