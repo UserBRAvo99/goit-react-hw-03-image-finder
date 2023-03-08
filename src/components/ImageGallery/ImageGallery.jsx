@@ -1,6 +1,9 @@
+import shortid from "shortid";
+import PropTypes from 'prop-types';
+
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
 
-import shortid from "shortid";
+
 
 
 function ImageGallery({ img }) {
@@ -13,6 +16,10 @@ function ImageGallery({ img }) {
             })}
         </ul>
     )
+}
+
+ImageGallery.propTypes = {
+    img: PropTypes.array.isRequired
 }
 
 export default ImageGallery
