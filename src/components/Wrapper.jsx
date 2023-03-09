@@ -1,6 +1,7 @@
 
 import { Component } from "react";
 import { getImgs } from "./fetch";
+// import { Audio } from 'react-loader-spinner'
 
 import Searchbar from "./Searchbar";
 import ImageGallery from "./ImageGallery/ImageGallery";
@@ -16,7 +17,7 @@ class Wrapper extends Component {
     page: 1,
     perPage: 20,
     modalGallery: false,
-    loader: false
+    isLoading: false
   }
   // componentDidMount() {
 
@@ -30,7 +31,6 @@ class Wrapper extends Component {
     
   }
   
-  
   getData = async () => {
     try {
       const { data: { hits, totalHits } } = await getImgs(this.state.search, this.state.page, this.state.perPage);
@@ -42,6 +42,9 @@ class Wrapper extends Component {
       console.log(e);
       throw new Error(e);
     }
+    // finally {
+      
+    // }
   }
 
   formOnSubmit = (event) => {
@@ -55,14 +58,14 @@ class Wrapper extends Component {
     this.setState(prev => ({ page: prev.page + 1}))
   }
 
-
   render() {
     const arrImg = this.state.data
     const totalImg = this.state.totalHits
     console.log(totalImg);
     return (
       <div className="App">
-        <Searchbar onSubmit={this.formOnSubmit}/>
+        <Searchbar onSubmit={this.formOnSubmit} />
+        
         <ImageGallery img={arrImg} />
         {
           arrImg.length > 0 && arrImg.length < totalImg &&  (
@@ -75,3 +78,14 @@ class Wrapper extends Component {
 };
 
 export default Wrapper
+
+/* <Rings
+  height="80"
+  width="80"
+  color="#4fa94d"
+  radius="6"
+  wrapperStyle={{}}
+  wrapperClass=""
+  visible={true}
+  ariaLabel="rings-loading"
+/> */
