@@ -16,6 +16,7 @@ function ImageGalleryItem({ onClick, data }) {
 }
 
 ImageGalleryItem.propTypes = {
+  onClick: PropTypes.func.isRequired,
   data: PropTypes.shape({
     id: PropTypes.number.isRequired,
     tags: PropTypes.string.isRequired,

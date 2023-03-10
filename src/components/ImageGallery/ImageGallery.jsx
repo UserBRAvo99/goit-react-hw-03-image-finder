@@ -8,22 +8,20 @@ import ModalImg from 'components/Modal/Modal';
 class ImageGallery extends Component {
   state = {
     modalOpen: false,
-    largeImage: '',
+    largeImage: null,
   };
+
   OnClickGalleryItem = largeImageItem => {
-    this.setState({ largeImage: largeImageItem, modalOpen: true });
+    this.setState({
+      largeImage: largeImageItem,
+    });
+    this.ModalToggle();
   };
 
-  //   ModalToggle = () => {
-  //     this.setState(({ modalOpen }) => ({
-  //       modalOpen: !modalOpen,
-  //     }));
-  //   };
-
-  ModalClose = event => {
-    if (event.target.className === 'Overlay') {
-      this.setState({ modalOpen: false });
-    }
+  ModalToggle = () => {
+    this.setState(({ modalOpen }) => ({
+      modalOpen: !modalOpen,
+    }));
   };
 
   render() {
@@ -43,7 +41,7 @@ class ImageGallery extends Component {
           })}
         </ul>
         {modalOpen && (
-          <ModalImg searchLargeImage={largeImage} onClick={this.ModalClose} />
+          <ModalImg searchLargeImage={largeImage} onClose={this.ModalToggle} />
         )}
       </>
     );

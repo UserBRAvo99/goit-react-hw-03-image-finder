@@ -5,6 +5,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import ReadMoreBtn from './ReadMoreBtn';
 import Loader from './Loader';
+import Toastify from './Toastify/Toastify';
 
 class Wrapper extends Component {
   state = {
@@ -15,9 +16,11 @@ class Wrapper extends Component {
     perPage: 20,
     modalGallery: false,
     isLoading: false,
+    isDownloadHits: false,
+    error: false,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (
       prevState.page !== this.state.page ||
       prevState.search !== this.state.search
@@ -32,12 +35,16 @@ class Wrapper extends Component {
       const {
         data: { hits, totalHits },
       } = await getImgs(this.state.search, this.state.page, this.state.perPage);
+      if (hits.length === 0) {
+        this.setState({ isDownloadHits: true });
+        return;
+      }
       this.setState(prev => ({
         data: [...prev.data, ...hits],
         totalHits: totalHits,
       }));
     } catch (e) {
-      console.log(e);
+      this.setState({ error: true });
       throw new Error(e);
     } finally {
       this.setState({ isLoading: false });
@@ -67,16 +74,16 @@ class Wrapper extends Component {
   };
 
   render() {
-    const isLoading = this.state.isLoading;
-    const arrImg = this.state.data;
-    const totalImg = this.state.totalHits;
+    const { isLoading, data, totalHits, isDownloadHits, error } = this.state;
+
     return (
       <div className="App">
         <Searchbar onSubmit={this.formOnSubmit} />
-
-        <ImageGallery img={arrImg} />
+        {isDownloadHits && <Toastify massage="There is no such request" />}
+        {error && <Toastify massage="Server error" />}
+        <ImageGallery img={data} />
         {isLoading && <Loader />}
-        {arrImg.length > 0 && arrImg.length < totalImg && (
+        {data.length > 0 && data.length < totalHits && (
           <ReadMoreBtn title="Load More" event={this.loadMoreBtnClick} />
         )}
       </div>
